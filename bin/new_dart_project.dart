@@ -1,104 +1,151 @@
-void main() {
-  // num counter = 20.5;
-  // print(counter);
+main() {
+//   String name;
+//   name = "Hello";
+//   print(name);
 
-  // String name = 'Ahmad';
-  // print(name);
+//   String? brithDate;
+//   print(brithDate);
 
-  // bool isFavorite = true;
-  // print(isFavorite);
+//   const age = "23";
+//   // ! This line doesn't work
+//   // age = "30";
+//   print(age);
 
-  // isFavorite = false;
-  // print(isFavorite);
+//   final mark;
+//   mark = 20;
 
-  // print("=====================");
-  // dynamic all = "Ahmad";
-  // print(all.runtimeType);
-  // all = 20;
-  // print(all.runtimeType);
-  // all = true;
-  // print(all.runtimeType);
+//   // ? Can't Be init
+//   // const test;
+//   // test = 30;
 
-  // var age = 30;
-  // print(age);
+//   Map<String, Map<String, dynamic>> map = {
+//     "Malek": {
+//       "E": 90,
+//       "Arabic": 59,
+//     }
+//   };
 
-  // const products = "Apple";
-  // print(products.runtimeType);
+//   print(map.runtimeType);
+//   print(map['Malek']!.values.elementAt(0));
+//   print(map['Malek']!['E']);
 
-  // var category;
-  // print(category);
+//   List<int> testArray = [2, 3, 4, -2];
+//   print(signFunc(getMultiplResult(testArray)));
 
-  // int? count;
-  // print(count);
+//   print(signFuncWithOpitmize(testArray));
+// }
 
-  // List<String> names = ["Ahmad", "Noor", "Maya", "Alisar"];
-  // print(names[3]);
+// int getMultiplResult(List<int> array) {
+//   int temp = 1;
+//   for (var i = 0; i < array.length; i++) {
+//     temp = temp * array[i];
+//   }
+//   if (temp == 0) {
+//     return 0;
+//   } else if (temp > 0) {
+//     return 1;
+//   } else {
+//     return -1;
+//   }
+// }
 
-  Map<String, String> mark = {
-    "name": "Abdalaziz",
-    "Math 3": "30",
-    "ALgo": "90",
-  };
+// int signFunc(int result) {
+//   if (result > 0) {
+//     return 1;
+//   } else if (result == 0) {
+//     return 0;
+//   } else {
+//     return -1;
+//   }
+// }
 
-  print(mark.values.elementAt(0));
+// int signFuncWithOpitmize(List<int> array) {
+//   int temp = 1;
+//   if (array.contains(0)) {
+//     return 0;
+//   } else {
+//     for (var i = 0; i < array.length; i++) {
+//       temp = temp * array[i];
+//     }
+//     if (temp > 0) {
+//       return 1;
+//     } else {
+//       return -1;
+//     }
+//   }
 
-  List<Map<String, String>> nestMap = [
-    {
-      "name": 'Hamed',
-      "English": "100",
-    },
-  ];
+  Human ahmad = Human(n: 'Ahmad', g: true);
+  ahmad.getDetails();
+  print(ahmad.runtimeType);
+  Human maryam = Human(n: "Maryam", g: false);
+  maryam.getDetails();
 
-  print(nestMap[0]['English']);
+  Employee Loye = Employee("Loey", true);
+  Loye.getDetails();
+  print(Loye.runtimeType);
+  Loye.callMeBack();
 
-  Map<String, List<String>> nestListoFMap = {
-    "names": [
-      "Noor",
-      "Yaser",
-      "Hamed",
-    ],
-    "female names": [
-      "Batol",
-      "Leen",
-      "Lama",
-    ],
-  };
+  Human noor = Employee("NOOR", false);
+  noor.getDetails();
+  (noor as Employee).callMeBack();
 
-  if (3 != 5) {
-    print("😎");
+  print(noor.runtimeType);
+  num counter = 20.6;
+  if (counter is double) {
+    print(
+        "Ex elit proident incididunt officia magna minim velit cillum occaecat elit qui laboris dolor.");
+  } else {
+    print("object");
+  }
+  print(counter.runtimeType);
+
+  Cat cat = Cat();
+  Dog dog = Dog();
+
+  helloFrom(cat);
+
+
+  
+}
+
+// ! OOP
+
+class Human {
+  late String name;
+  late bool gender;
+
+  Human({required String n, required bool g}) {
+    name = n;
+    gender = g;
   }
 
-  print(nestListoFMap.values.elementAt(0).elementAt(2));
-  addTwoNumber(20, secondNumber: 40);
-  addTwoNumberWithOptional(40);
-
-  int result = mulitpleAllNumber(first: 20, second: 20);
-  print(result);
-
-  print(mulitpleAllNumber(first: 40));
-  print(fakeFunction());
+  getDetails() {
+    if (gender) {
+      print(name + "  " + "He is Male");
+    } else {
+      print(name + "  " + "She is Female");
+    }
+  }
 }
 
-void addTwoNumber(int firstNumber, {required int secondNumber}) {
-  print(firstNumber);
-  print(secondNumber);
-  print("-----------------");
-  print(firstNumber + secondNumber);
+class Employee extends Human {
+  Employee(String n, bool g) : super(n: n, g: g);
+
+  callMeBack() {
+    print("Please I am Very Busy , So CALL me Back");
+  }
 }
 
-void addTwoNumberWithOptional(int firstNumber, {int secondNumber = 0}) {
-  print(firstNumber);
-  print(secondNumber);
-  print("-----------------");
-  print(firstNumber + secondNumber);
-}
+class Dog extends Animal {}
 
-int mulitpleAllNumber({required int first, int second = 1}) {
-  return first * second;
-}
+class Cat extends Animal{}
 
-String fakeFunction() {
-  String name = "Hello World";
-  print('object');
-  return name;
+abstract class Animal {}
+
+helloFrom(Animal creautre) {
+  if (creautre is Cat) {
+    print("Hello From Cat");
+  } else {
+    print("Hello From Dog");
+  }
 }
