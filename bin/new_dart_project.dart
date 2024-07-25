@@ -1,151 +1,129 @@
-main() {
-//   String name;
-//   name = "Hello";
-//   print(name);
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
-//   String? brithDate;
-//   print(brithDate);
+import 'dart:io';
 
-//   const age = "23";
-//   // ! This line doesn't work
-//   // age = "30";
-//   print(age);
+abstract class Animal {
+  late String name;
 
-//   final mark;
-//   mark = 20;
+  Animal(String name) {
+    this.name = name;
+  }
 
-//   // ? Can't Be init
-//   // const test;
-//   // test = 30;
+  void voice(String kindOfVoice);
+}
 
-//   Map<String, Map<String, dynamic>> map = {
-//     "Malek": {
-//       "E": 90,
-//       "Arabic": 59,
-//     }
-//   };
+class Cat extends Animal {
+  Cat(name) : super(name);
 
-//   print(map.runtimeType);
-//   print(map['Malek']!.values.elementAt(0));
-//   print(map['Malek']!['E']);
+  @override
+  void voice(String kindOfVoice) {
+    print(kindOfVoice);
+  }
+}
 
-//   List<int> testArray = [2, 3, 4, -2];
-//   print(signFunc(getMultiplResult(testArray)));
+class Dog extends Animal {
+  Dog(name) : super(name);
 
-//   print(signFuncWithOpitmize(testArray));
-// }
+  @override
+  void voice(String kindOfVoice) {
+    print("Howe Howe");
+  }
+}
 
-// int getMultiplResult(List<int> array) {
-//   int temp = 1;
-//   for (var i = 0; i < array.length; i++) {
-//     temp = temp * array[i];
-//   }
-//   if (temp == 0) {
-//     return 0;
-//   } else if (temp > 0) {
-//     return 1;
-//   } else {
-//     return -1;
-//   }
-// }
+// ? Functioal Paradaigm
 
-// int signFunc(int result) {
-//   if (result > 0) {
-//     return 1;
-//   } else if (result == 0) {
-//     return 0;
-//   } else {
-//     return -1;
-//   }
-// }
+void addTwoNumber(int first, int second) {
+  print(first + second);
+}
 
-// int signFuncWithOpitmize(List<int> array) {
-//   int temp = 1;
-//   if (array.contains(0)) {
-//     return 0;
-//   } else {
-//     for (var i = 0; i < array.length; i++) {
-//       temp = temp * array[i];
-//     }
-//     if (temp > 0) {
-//       return 1;
-//     } else {
-//       return -1;
-//     }
-//   }
+void crayFunction(Function f) {
+  f();
+}
 
-  Human ahmad = Human(n: 'Ahmad', g: true);
-  ahmad.getDetails();
-  print(ahmad.runtimeType);
-  Human maryam = Human(n: "Maryam", g: false);
-  maryam.getDetails();
+main() async {
+  var adder = addTwoNumber;
+  adder(4, 6);
 
-  Employee Loye = Employee("Loey", true);
-  Loye.getDetails();
-  print(Loye.runtimeType);
-  Loye.callMeBack();
+  var temp = () {
+    print("object");
+  };
+  print(temp.runtimeType);
+  crayFunction(temp);
+  // Cat ketty = Cat("Hello");
+  // ketty.voice("kindOfVoice");
+  // Dog dog = Dog("World");
+  // dog.voice('');
+  // // ? 3 -  Hello - Hello From async
+  // String message = await getData();
+  // print("Hello");
+  // print(message);
 
-  Human noor = Employee("NOOR", false);
-  noor.getDetails();
-  (noor as Employee).callMeBack();
+  // // !  Handle Excpetion
+  // try {
+  //   // ? Hello - 3 - Hello From Async
+  //   String message1 = getData() as String;
+  //   print("Hello");
+  //   print(await message1);
+  // } catch (e) {
+  //   print("There is An Execption ${e}");
+  // }
 
-  print(noor.runtimeType);
-  num counter = 20.6;
-  if (counter is double) {
-    print(
-        "Ex elit proident incididunt officia magna minim velit cillum occaecat elit qui laboris dolor.");
-  } else {
+  // // ! Default Handling from Dart
+  // int counter = 10;
+  // print(counter / 0.0);
+
+  // // ? Hello - Future<String> - 3
+  // Future<String> message2 = getData();
+  // print("Hello");
+  // print(message2);
+
+  // ? Start to OOP
+  Person ahmad = Person(age: 30);
+  ahmad.talk();
+  ahmad.set("Ahmad");
+  ahmad.talkAndSayMyName();
+
+  print(ahmad.age);
+
+  B b = B();
+  b.hi();
+}
+
+Future<String> getData() async {
+  await Future.delayed(Duration(seconds: 3));
+
+  return "Hello From Asycn Function";
+}
+
+class Person {
+  // ? properties
+  String _name = "";
+  late double age;
+  Person({required this.age});
+
+  set(String name) {
+    _name = name;
+  }
+
+  // ? behavoir (methods)
+  talk() {
+    print("I am talking");
+  }
+
+  talkAndSayMyName() {
+    print("I am ${_name} and I am Talking");
+  }
+}
+
+class A {
+  hi() {
     print("object");
   }
-  print(counter.runtimeType);
-
-  Cat cat = Cat();
-  Dog dog = Dog();
-
-  helloFrom(cat);
-
-
-  
 }
 
-// ! OOP
-
-class Human {
-  late String name;
-  late bool gender;
-
-  Human({required String n, required bool g}) {
-    name = n;
-    gender = g;
-  }
-
-  getDetails() {
-    if (gender) {
-      print(name + "  " + "He is Male");
-    } else {
-      print(name + "  " + "She is Female");
-    }
-  }
-}
-
-class Employee extends Human {
-  Employee(String n, bool g) : super(n: n, g: g);
-
-  callMeBack() {
-    print("Please I am Very Busy , So CALL me Back");
-  }
-}
-
-class Dog extends Animal {}
-
-class Cat extends Animal{}
-
-abstract class Animal {}
-
-helloFrom(Animal creautre) {
-  if (creautre is Cat) {
-    print("Hello From Cat");
-  } else {
-    print("Hello From Dog");
+class B extends A {
+  @override
+  hi() {
+    print("Hello From A");
   }
 }
