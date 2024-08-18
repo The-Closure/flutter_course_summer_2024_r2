@@ -6,7 +6,9 @@ import 'package:login_storage_token/service/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences prefs;
+
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
