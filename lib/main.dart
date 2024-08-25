@@ -4,7 +4,9 @@ void main(List<String> args) {
   runApp(
     MaterialApp(
       home: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+        ),
       ),
     ),
   );
