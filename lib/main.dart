@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,13 +24,68 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  Color color = Colors.pink;
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  Color color = Colors.blue;
   double width = 500;
   Tween<double> opacityAndpaddingTween = Tween<double>(
     begin: 0,
     end: 1,
   );
+  bool isFav = false;
+  // AnimationController animationController = AnimationController(vsync: );
+  late AnimationController animationController;
+  late Animation<Color?> iconColor;
+  late Animation<double> iconSize;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    iconColor = ColorTween(begin: Colors.grey.shade300, end: Colors.red)
+        .animate(animationController);
+
+    iconSize = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 100,
+          end: 150,
+        ),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 150,
+          end: 100,
+        ),
+        weight: 50,
+      )
+    ]).animate(animationController);
+
+    animationController.addListener(() {
+      print(iconColor.value);
+    });
+
+    animationController.addStatusListener(
+      (status) {
+        if (status == AnimationStatus.completed) {
+          isFav = true;
+        } else {
+          isFav = false;
+        }
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +93,7 @@ class _HomePageState extends State<HomePage> {
         child: AnimatedContainer(
           curve: Curves.bounceIn,
           width: width,
-          height: 500,
+          height: 800,
           color: color,
           duration: const Duration(seconds: 2),
           child: Center(
@@ -88,7 +144,33 @@ class _HomePageState extends State<HomePage> {
                   duration: const Duration(
                     seconds: 5,
                   ),
-                )
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                AnimatedBuilder(
+                  builder: (context, child) {
+                    return InkWell(
+                      onTap: () {
+                        isFav
+                            ? animationController.reverse()
+                            : animationController.forward();
+                      },
+                      child: Icon(
+                        Icons.favorite,
+                        size: iconSize.value,
+                        color: iconColor.value,
+                      ),
+                    );
+                  },
+                  animation: animationController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Lottie.network(
+                  'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',
+                ),
               ],
             ),
           ),
