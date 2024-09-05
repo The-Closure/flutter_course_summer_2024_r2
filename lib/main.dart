@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_session/firebase_options.dart';
+import 'package:firebase_session/service/notification_sevice.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,15 +15,19 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  NotificationService().initNotification();
   runApp(const MyApp());
 }
+
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
+      navigatorKey: navigatorKey,
       home: HomePage(),
     );
   }
@@ -47,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             TextField(
               controller: email,
-              decoration: const InputDecoration(
+              decoration:  InputDecoration(
                 label: Text('Email'),
                 border: OutlineInputBorder(),
               ),
@@ -176,7 +181,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late File file;
-   String? imageUrl;
+  String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -272,6 +277,26 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class NotificationPage extends StatelessWidget {
+  const NotificationPage(
+      {super.key,
+      required this.notificationTitle,
+      required this.notificationBody});
+  final String notificationTitle;
+  final String notificationBody;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: ListTile(
+        title: Text(notificationTitle),
+        subtitle: Text(notificationBody),
+      )),
     );
   }
 }
